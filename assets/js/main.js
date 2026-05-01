@@ -46,30 +46,46 @@
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Click-to-rotate images in highlight cards (delegated, robust across reloads)
+  // Advance rotator to next image
+  function rotatorAdvance(rotator) {
+    const images = Array.from(rotator.querySelectorAll('.rotator-image'));
+    if (images.length < 2) return;
+    const dots = Array.from(rotator.querySelectorAll('.rotator-dots .dot'));
+    let activeIndex = images.findIndex((img) => img.classList.contains('is-active'));
+    if (activeIndex < 0) activeIndex = 0;
+    const nextIndex = (activeIndex + 1) % images.length;
+    images.forEach((img, i) => img.classList.toggle('is-active', i === nextIndex));
+    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === nextIndex));
+  }
+
+  // Click-to-rotate (delegated)
   document.addEventListener('click', (event) => {
     const nextButton = event.target.closest('.img-rotator-next');
     const clickedRotator = event.target.closest('[data-rotator]');
     if (!nextButton && !clickedRotator) return;
-
     const rotator = nextButton ? nextButton.closest('[data-rotator]') : clickedRotator;
     if (!rotator) return;
-
-    const images = Array.from(rotator.querySelectorAll('.rotator-image'));
-    if (images.length < 2) return;
-    const dots = Array.from(rotator.querySelectorAll('.rotator-dots .dot'));
-
-    let activeIndex = images.findIndex((img) => img.classList.contains('is-active'));
-    if (activeIndex < 0) activeIndex = 0;
-
-    const nextIndex = (activeIndex + 1) % images.length;
-    images.forEach((img, index) => {
-      img.classList.toggle('is-active', index === nextIndex);
-    });
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('is-active', index === nextIndex);
-    });
-
+    rotatorAdvance(rotator);
     if (nextButton) event.preventDefault();
   });
+
+  // Swipe-to-rotate (touch support)
+  document.addEventListener('touchstart', (event) => {
+    const rotator = event.target.closest('[data-rotator]');
+    if (!rotator) return;
+    rotator._touchStartX = event.touches[0].clientX;
+    rotator._touchStartY = event.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (event) => {
+    const rotator = event.target.closest('[data-rotator]');
+    if (!rotator || rotator._touchStartX == null) return;
+    const dx = event.changedTouches[0].clientX - rotator._touchStartX;
+    const dy = event.changedTouches[0].clientY - rotator._touchStartY;
+    // Only count as a horizontal swipe if dx is dominant and at least 40px
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      rotatorAdvance(rotator);
+    }
+    rotator._touchStartX = null;
+  }, { passive: true });
 })();
