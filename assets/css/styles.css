@@ -331,17 +331,78 @@ section.alt { background: var(--bg-alt); }
   transition: transform 500ms ease;
 }
 .highlight-card:hover .img-wrap img { transform: scale(1.05); }
-.highlight-card .img-wrap.split-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
+.highlight-card .img-wrap.rotator {
+  position: relative;
+  cursor: pointer;
 }
-.highlight-card .img-wrap.split-pair img {
-  height: 100%;
-  object-fit: cover;
+.highlight-card .img-wrap.rotator::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 42%;
+  background: linear-gradient(to top, rgba(8, 12, 20, 0.45), rgba(8, 12, 20, 0));
+  pointer-events: none;
+  z-index: 1;
 }
-.highlight-card .img-wrap.split-pair img + img {
-  border-left: 1px solid var(--border);
+.highlight-card .img-wrap.rotator .rotator-image {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease, transform 500ms ease;
+}
+.highlight-card .img-wrap.rotator .rotator-image.contain {
+  object-fit: contain;
+  padding: 0.25rem;
+  background: #fff;
+}
+.highlight-card .img-wrap.rotator .rotator-image.contain.is-active {
+  transform: scale(1.14);
+}
+.highlight-card .img-wrap.rotator .rotator-image.is-active {
+  opacity: 1;
+}
+.highlight-card .img-wrap.rotator .img-rotator-controls {
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.highlight-card .img-wrap.rotator .rotator-dots {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.highlight-card .img-wrap.rotator .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.highlight-card .img-wrap.rotator .dot.is-active {
+  background: #fff;
+}
+.highlight-card .img-wrap.rotator .img-rotator-next {
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 0.68rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.38rem 0.62rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.highlight-card .img-wrap.rotator .img-rotator-next:hover {
+  background: rgba(255, 255, 255, 0.24);
 }
 .highlight-card .img-wrap.logo-wrap {
   background: #fff;
@@ -455,6 +516,31 @@ section.alt { background: var(--bg-alt); }
 .project-card .media img,
 .project-card .media video {
   width: 100%; height: 100%; object-fit: cover;
+}
+.project-card .media.project-rotator {
+  position: relative;
+  cursor: pointer;
+}
+.project-card .media.project-rotator::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 42%;
+  background: linear-gradient(to top, rgba(8, 12, 20, 0.45), rgba(8, 12, 20, 0));
+  pointer-events: none;
+  z-index: 1;
+}
+.project-card .media.project-rotator .rotator-image {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+.project-card .media.project-rotator .rotator-image.is-active {
+  opacity: 1;
 }
 .project-card .media.portrait {
   aspect-ratio: 4 / 5;
