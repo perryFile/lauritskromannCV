@@ -65,3 +65,6 @@ When you buy a domain:
 - Add a new highlight by copying one of the `<article class="highlight-card">` blocks.
 - Add a new project by copying one of the `<article class="project-card">` blocks.
 - Keep the Danish and English files in sync when you add content.
+
+
+Fremtidig ændring push med: git add . && git commit -m "din besked" && git push 

@@ -331,6 +331,18 @@ section.alt { background: var(--bg-alt); }
   transition: transform 500ms ease;
 }
 .highlight-card:hover .img-wrap img { transform: scale(1.05); }
+.highlight-card .img-wrap.split-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.highlight-card .img-wrap.split-pair img {
+  height: 100%;
+  object-fit: cover;
+}
+.highlight-card .img-wrap.split-pair img + img {
+  border-left: 1px solid var(--border);
+}
 .highlight-card .img-wrap.logo-wrap {
   background: #fff;
   display: flex;
