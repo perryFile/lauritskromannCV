@@ -400,6 +400,7 @@ section.alt { background: var(--bg-alt); }
   padding: 0.38rem 0.62rem;
   border-radius: 999px;
   cursor: pointer;
+  touch-action: manipulation;
 }
 .highlight-card .img-wrap.rotator .img-rotator-next:hover {
   background: rgba(255, 255, 255, 0.24);
@@ -541,6 +542,46 @@ section.alt { background: var(--bg-alt); }
 }
 .project-card .media.project-rotator .rotator-image.is-active {
   opacity: 1;
+}
+.project-card .media.project-rotator .img-rotator-controls {
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.project-card .media.project-rotator .rotator-dots {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.project-card .media.project-rotator .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.project-card .media.project-rotator .dot.is-active {
+  background: #fff;
+}
+.project-card .media.project-rotator .img-rotator-next {
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 0.68rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.38rem 0.62rem;
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: manipulation;
 }
 .project-card .media.portrait {
   aspect-ratio: 4 / 5;
